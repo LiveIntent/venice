@@ -84,7 +84,6 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RuntimeConfig;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder;
-import org.apache.spark.sql.catalyst.encoders.RowEncoder;
 import org.apache.spark.sql.functions;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
@@ -116,8 +115,8 @@ public abstract class AbstractDataWriterSparkJob extends DataWriterComputeJob {
   }
 
   private void setupSparkDataWriterJobFlow(PushJobSetting pushJobSetting) {
-    ExpressionEncoder<Row> rowEncoder = RowEncoder.apply(DEFAULT_SCHEMA);
-    ExpressionEncoder<Row> rowEncoderWithPartition = RowEncoder.apply(DEFAULT_SCHEMA_WITH_PARTITION);
+    ExpressionEncoder<Row> rowEncoder = ExpressionEncoder.apply(DEFAULT_SCHEMA);
+    ExpressionEncoder<Row> rowEncoderWithPartition = ExpressionEncoder.apply(DEFAULT_SCHEMA_WITH_PARTITION);
     int numOutputPartitions = pushJobSetting.partitionCount;
 
     // Load data from input path
@@ -184,13 +183,12 @@ public abstract class AbstractDataWriterSparkJob extends DataWriterComputeJob {
 
   private void setupDefaultSparkSessionForDataWriterJob(PushJobSetting pushJobSetting, VeniceProperties props) {
     this.jobGroupId = pushJobSetting.jobId + ":venice_push_job-" + pushJobSetting.topic;
-
     SparkConf sparkConf = new SparkConf();
     SparkSession.Builder sparkSessionBuilder = SparkSession.builder().appName(jobGroupId).config(sparkConf);
     if (sparkConf.get(SPARK_LEADER_CONFIG, null) == null) {
+      LOGGER.info("Setting default spark leader to {}", DEFAULT_SPARK_CLUSTER);
       sparkSessionBuilder.master(props.getString(SPARK_CLUSTER_CONFIG, DEFAULT_SPARK_CLUSTER));
     }
-
     for (String key: props.keySet()) {
       if (key.toLowerCase().startsWith(SPARK_SESSION_CONF_PREFIX)) {
         String overrideKey = key.substring(SPARK_SESSION_CONF_PREFIX.length());
