@@ -49,10 +49,9 @@ def jacksonVersion = '2.13.4'
 def pulsarGroup = 'org.apache.pulsar'
 def pulsarVersion = '2.10.3'
 def alpnAgentVersion = '2.0.10'
-def hadoopVersion = '2.10.2'
-def apacheSparkVersion = '3.3.3'
+def hadoopVersion = '3.4.0'
+def apacheSparkVersion = '3.5.2'
 def antlrVersion = '4.8'
-
 ext.libraries = [
     alpnAgent: "org.mortbay.jetty.alpn:jetty-alpn-agent:${alpnAgentVersion}",
     antlr4: "org.antlr:antlr4:${antlrVersion}",
@@ -137,6 +136,7 @@ ext.libraries = [
     zkclient: 'com.101tec:zkclient:0.7', // For Kafka AdminUtils
     zookeeper: 'org.apache.zookeeper:zookeeper:3.6.3',
     zstd: 'com.github.luben:zstd-jni:1.5.2-3',
+    sparkk8s: "org.apache.spark:spark-kubernetes_2.12:${apacheSparkVersion}",
 ]
 
 group = 'com.linkedin.venice'

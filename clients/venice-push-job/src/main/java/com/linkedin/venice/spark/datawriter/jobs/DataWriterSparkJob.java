@@ -33,7 +33,7 @@ import org.apache.spark.sql.DataFrameReader;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.catalyst.encoders.RowEncoder;
+import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder;
 import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema;
 
 
@@ -110,7 +110,7 @@ public class DataWriterSparkJob extends AbstractDataWriterSparkJob {
       final byte[] inputValueBytes = recordReader.getValueBytes(recordAvroWrapper, null);
 
       return new GenericRowWithSchema(new Object[] { inputKeyBytes, inputValueBytes }, DEFAULT_SCHEMA);
-    }, RowEncoder.apply(DEFAULT_SCHEMA));
+    }, ExpressionEncoder.apply(DEFAULT_SCHEMA));
 
     return df;
   }
