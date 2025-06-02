@@ -8,7 +8,7 @@ plugins {
   id 'idea'
   id 'java'
   id 'maven-publish'
-  id 'com.diffplug.spotless' version '6.12.0'
+  id 'com.diffplug.spotless' version '7.0.4'
   id 'com.dorongold.task-tree' version '2.1.0'
   id 'com.github.johnrengelman.shadow' version '7.1.2' apply false
   id 'com.github.spotbugs' version '4.8.0' apply false
@@ -64,6 +64,7 @@ ext.libraries = [
     apacheSparkAvro: "org.apache.spark:spark-avro_${scala}:${apacheSparkVersion}",
     apacheSparkCore: "org.apache.spark:spark-core_${scala}:${apacheSparkVersion}",
     apacheSparkSql: "org.apache.spark:spark-sql_${scala}:${apacheSparkVersion}",
+    apacheSparkKubernetes: "org.apache.spark:spark-kubernetes_${scala}:${apacheSparkVersion}",
     asm: "org.ow2.asm:asm:9.7",
     avro: "org.apache.avro:avro:${avroVersion}",
     avroCompiler: "org.apache.avro:avro-compiler:${avroVersion}",
